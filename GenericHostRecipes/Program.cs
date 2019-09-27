@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
@@ -37,7 +38,7 @@ namespace GenericHostBuilderRecipes
                        {
                            LoggerConfiguration loggerConfiguration = new LoggerConfiguration()
                                                      .ReadFrom.Configuration(hostContext.Configuration)
-                                                     .WriteTo.Udp(IPAddress.Loopback, 514, new SplunkJsonFormatter(true, CultureInfo.InvariantCulture))
+                                                     .WriteTo.Udp(IPAddress.Loopback.ToString(), 514,AddressFamily.Unspecified, new SplunkJsonFormatter(true, CultureInfo.InvariantCulture))
                                                      .Enrich.WithDemystifiedStackTraces()
                                                      .Enrich.WithProperty("version", "1.0.0.1");
 
